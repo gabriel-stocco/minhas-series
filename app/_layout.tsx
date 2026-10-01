@@ -1,10 +1,25 @@
-import { View, Text } from "react-native";
 import "../global.css";
+import { useEffect } from "react";
+import { Stack } from "expo-router";
+import { runMigrations } from "../src/database/database";
 
-export default function Index() {
+export default function RootLayout() {
+  useEffect(() => {
+    runMigrations();
+  }, []);
+
   return (
-    <View className="flex-1 justify-center items-center bg-slate-900">
-      <Text className="text-3xl font-bold text-white">Olá, mundo! 👋</Text>
-    </View>
+    <Stack
+      screenOptions={{
+        headerStyle: { backgroundColor: "#0f172a" },
+        headerTintColor: "#ffffff",
+        headerTitleStyle: { fontWeight: "bold" },
+        contentStyle: { backgroundColor: "#0f172a" },
+      }}
+    >
+      <Stack.Screen name="index" options={{ title: "🎬 Minhas Séries" }} />
+      <Stack.Screen name="detalhe" options={{ title: "Detalhes" }} />
+      <Stack.Screen name="form" options={{ title: "Série" }} />
+    </Stack>
   );
 }
